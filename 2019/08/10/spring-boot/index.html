@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service  123456789101112131415161718192021222324252627@Servicepublic class LoginInterceptor implements HandlerInterceptor &amp;#123;    @Autowired    privat">
-<meta name="keywords" content="spring">
+    <meta name="description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service">
+<meta name="keywords" content="spring boot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring boot 框架">
 <meta property="og:url" content="http://yoursite.com/2019/08/10/spring-boot/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service  123456789101112131415161718192021222324252627@Servicepublic class LoginInterceptor implements HandlerInterceptor &amp;#123;    @Autowired    privat">
+<meta property="og:description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-10T07:21:59.000Z">
+<meta property="og:updated_time" content="2019-08-10T08:32:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring boot 框架">
-<meta name="twitter:description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service  123456789101112131415161718192021222324252627@Servicepublic class LoginInterceptor implements HandlerInterceptor &amp;#123;    @Autowired    privat">
+<meta name="twitter:description" content="拦截器 需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -151,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    a minute read (About 124 words)
+                    a minute read (About 125 words)
                 </span>
                 
                 
@@ -167,6 +167,8 @@
             <h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h1><blockquote>
 <p>需要实现<strong>HandlerInterceptor</strong>接口的<strong>preHandler</strong>方法  <strong><em>记得添加@Service</em></strong></p>
 </blockquote>
+<a id="more"></a>
+
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Service</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Cookie[] cookies = request.getCookies();</span><br><span class="line">        <span class="hljs-keyword">if</span> (cookies != <span class="hljs-keyword">null</span>)&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (cookie.getName().equals(<span class="hljs-string">"token"</span>))&#123;</span><br><span class="line">                String token = cookie.getValue();</span><br><span class="line">                UserExample userExample = <span class="hljs-keyword">new</span> UserExample();</span><br><span class="line">                userExample.createCriteria()</span><br><span class="line">                        .andTokenEqualTo(token);</span><br><span class="line">                List&lt;User&gt; users = userMapper.selectByExample(userExample);</span><br><span class="line">                <span class="hljs-keyword">if</span>(users.size() != <span class="hljs-number">0</span>)&#123;</span><br><span class="line">                    User user = users.get(<span class="hljs-number">0</span>);</span><br><span class="line">                    request.getSession().setAttribute(<span class="hljs-string">"user"</span>, user);</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -181,7 +183,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/spring/">spring</a>
+                    <a class="has-link-grey -link" href="/tags/spring-boot/">spring boot</a>
                 </div>
             </div>
         </div>
@@ -198,13 +200,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/08/08/hello-world/">
-                <span class="level-item">Hello World</span>
-                <i class="level-item fas fa-chevron-right"></i>
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/08/10/利用-shell-编写刑侦科推理测试题/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">利用 shell 编写刑侦科推理测试题</span>
             </a>
         </div>
+        
         
     </div>
 </div>
@@ -270,10 +272,10 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Tag
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
@@ -313,8 +315,15 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/spring/">
-                        <span class="tag">spring</span>
+                    <a class="tags has-addons" href="/tags/shell/">
+                        <span class="tag">shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/spring-boot/">
+                        <span class="tag">spring boot</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
