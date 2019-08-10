@@ -2,20 +2,24 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>xiaoyang - Hexo</title>
+<title>spring boot 框架 - Hexo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="article">
-<meta property="og:title" content="xiaoyang">
-<meta property="og:url" content="http://yoursite.com/2019/08/10/xiaoyang/index.html">
+    <meta name="description" content="拦截器  需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service   @Service public class LoginInterceptor implements HandlerInterceptor {  @Autowired private UserMapper userMapper;  @Override public boolean p">
+<meta name="keywords" content="spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 框架">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/spring-boot/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="拦截器  需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service   @Service public class LoginInterceptor implements HandlerInterceptor {  @Autowired private UserMapper userMapper;  @Override public boolean p">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-09T16:22:02.000Z">
+<meta property="og:updated_time" content="2019-08-10T06:33:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xiaoyang">
+<meta name="twitter:title" content="spring boot 框架">
+<meta name="twitter:description" content="拦截器  需要实现HandlerInterceptor接口的preHandler方法  记得添加@Service   @Service public class LoginInterceptor implements HandlerInterceptor {  @Autowired private UserMapper userMapper;  @Override public boolean p">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -30,7 +34,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
 
 
     
@@ -90,14 +94,37 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="xiaoyang" height="28">
+                <img src="/images/logo.svg" alt="spring boot 框架" height="28">
             
             </a>
         </div>
         <div class="navbar-menu">
             
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+            </div>
+            
             <div class="navbar-end">
                 
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/xiaoyang688">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
                 
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
@@ -118,13 +145,13 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-08-09T16:14:00.000Z">2019-08-10</time>
+                <time class="level-item has-text-grey" datetime="2019-08-10T04:52:50.000Z">2019-08-10</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 0 words)
+                    a minute read (About 122 words)
                 </span>
                 
                 
@@ -133,11 +160,66 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                xiaoyang
+                spring boot 框架
             
         </h1>
         <div class="content">
-            
+            <h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h1><blockquote>
+<ul>
+<li>需要实现<strong>HandlerInterceptor</strong>接口的<strong>preHandler</strong>方法  <strong><em>记得添加@Service</em></strong></li>
+</ul>
+</blockquote>
+<pre><code>@Service
+public class LoginInterceptor implements HandlerInterceptor {
+
+@Autowired
+private UserMapper userMapper;
+
+@Override
+public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null){
+    for (Cookie cookie : cookies) {
+        if (cookie.getName().equals(&quot;token&quot;)){
+            String token = cookie.getValue();
+            UserExample userExample = new UserExample();
+            userExample.createCriteria()
+                    .andTokenEqualTo(token);
+            List&lt;User&gt; users = userMapper.selectByExample(userExample);
+            if(users.size() != 0){
+                User user = users.get(0);
+                request.getSession().setAttribute(&quot;user&quot;, user);
+                break;
+            }
+        }
+    }
+    }
+    return true;
+}</code></pre><blockquote>
+<ul>
+<li>实现<strong>WebMvcConfigurer</strong>接口中的<strong>addInterceptors</strong>  <strong><em>记得添加@Configuration</em></strong></li>
+</ul>
+</blockquote>
+<pre><code>    @Configuration
+    public class WebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor).addPathPatterns(&quot;/**&quot;);
+}
+}</code></pre>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/spring/">spring</a>
+                </div>
+            </div>
         </div>
         
         
@@ -148,20 +230,6 @@
 
 
 
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/08/09/test/">
-                <span class="level-item">test</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
 
 
 </div>
@@ -179,7 +247,7 @@
             <div class="level-item has-text-centered" style="flex-shrink: 1">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="https://www.gravatar.com/avatar/a978b85f6fd2d0e1d9d4cdbdf5238faf?s=128" alt="xiaoyang">
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="xiaoyang">
                     
                     
                     <p class="is-size-4 is-block">
@@ -188,13 +256,13 @@
                     
                     
                     <p class="is-size-6 is-block">
-                        编程笔记
+                        codeNote
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>广州</span>
+                        <span>Guangzhou</span>
                     </p>
                     
                 </div>
@@ -204,10 +272,10 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Posts
+                        Post
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        1
                     </p>
                 </div>
             </div>
@@ -224,10 +292,10 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Tags
+                        Tag
                     </p>
                     <p class="title has-text-weight-normal">
-                        0
+                        1
                     </p>
                 </div>
             </div>
@@ -238,6 +306,43 @@
         </div>
         
         
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#拦截器">
+        <span class="has-mr-6">1</span>
+        <span>拦截器</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/spring/">
+                        <span class="tag">spring</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
     </div>
 </div>
     
@@ -258,7 +363,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="xiaoyang" height="28">
+                    <img src="/images/logo.svg" alt="spring boot 框架" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -268,19 +373,6 @@
                 </p>
             </div>
             <div class="level-end">
-            
-                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
-                
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/xiaoyang688">
-                        
-                        <i class="fab fa-github"></i>
-                        
-                    </a>
-                </p>
-                
-                </div>
             
             </div>
         </div>
