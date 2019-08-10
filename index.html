@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
     
@@ -143,7 +143,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    a minute read (About 122 words)
+                    a minute read (About 124 words)
                 </span>
                 
                 
@@ -157,52 +157,69 @@
         </h1>
         <div class="content">
             <h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h1><blockquote>
-<ul>
-<li>需要实现<strong>HandlerInterceptor</strong>接口的<strong>preHandler</strong>方法  <strong><em>记得添加@Service</em></strong></li>
-</ul>
+<p>需要实现<strong>HandlerInterceptor</strong>接口的<strong>preHandler</strong>方法  <strong><em>记得添加@Service</em></strong></p>
 </blockquote>
-<pre><code>@Service
-public class LoginInterceptor implements HandlerInterceptor {
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Service</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Cookie[] cookies = request.getCookies();</span><br><span class="line">        <span class="hljs-keyword">if</span> (cookies != <span class="hljs-keyword">null</span>)&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (cookie.getName().equals(<span class="hljs-string">"token"</span>))&#123;</span><br><span class="line">                String token = cookie.getValue();</span><br><span class="line">                UserExample userExample = <span class="hljs-keyword">new</span> UserExample();</span><br><span class="line">                userExample.createCriteria()</span><br><span class="line">                        .andTokenEqualTo(token);</span><br><span class="line">                List&lt;User&gt; users = userMapper.selectByExample(userExample);</span><br><span class="line">                <span class="hljs-keyword">if</span>(users.size() != <span class="hljs-number">0</span>)&#123;</span><br><span class="line">                    User user = users.get(<span class="hljs-number">0</span>);</span><br><span class="line">                    request.getSession().setAttribute(<span class="hljs-string">"user"</span>, user);</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-@Autowired
-private UserMapper userMapper;
-
-@Override
-public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null){
-    for (Cookie cookie : cookies) {
-        if (cookie.getName().equals(&quot;token&quot;)){
-            String token = cookie.getValue();
-            UserExample userExample = new UserExample();
-            userExample.createCriteria()
-                    .andTokenEqualTo(token);
-            List&lt;User&gt; users = userMapper.selectByExample(userExample);
-            if(users.size() != 0){
-                User user = users.get(0);
-                request.getSession().setAttribute(&quot;user&quot;, user);
-                break;
-            }
-        }
-    }
-    }
-    return true;
-}</code></pre><blockquote>
-<ul>
-<li>实现<strong>WebMvcConfigurer</strong>接口中的<strong>addInterceptors</strong>  <strong><em>记得添加@Configuration</em></strong></li>
-</ul>
+<blockquote>
+<p>实现<strong>WebMvcConfigurer</strong>接口中的<strong>addInterceptors</strong>  <strong><em>记得添加@Configuration</em></strong></p>
 </blockquote>
-<pre><code>    @Configuration
-    public class WebConfig implements WebMvcConfigurer {
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Configuration</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> LoginInterceptor loginInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addInterceptor(loginInterceptor).addPathPatterns(<span class="hljs-string">"/**"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    @Autowired
-    private LoginInterceptor loginInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor).addPathPatterns(&quot;/**&quot;);
-}
-}</code></pre>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-08T01:15:41.000Z">2019-08-08</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 121 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/08/08/hello-world/">Hello World</a>
+            
+        </h1>
+        <div class="content">
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
         </div>
         
         
@@ -257,10 +274,10 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Post
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
