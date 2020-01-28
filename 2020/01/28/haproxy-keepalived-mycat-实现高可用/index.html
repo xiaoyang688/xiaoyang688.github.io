@@ -8,6 +8,7 @@
 
 
     <meta name="description" content="1.先启动两个mycat服务">
+<meta name="keywords" content="高可用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="haproxy + keepalived + mycat 实现高可用">
 <meta property="og:url" content="http://yoursite.com/2020/01/28/haproxy-keepalived-mycat-实现高可用/index.html">
@@ -15,7 +16,7 @@
 <meta property="og:description" content="1.先启动两个mycat服务">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2020-01-28T13:16:40.208Z">
+<meta property="og:updated_time" content="2020-01-28T13:20:16.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="haproxy + keepalived + mycat 实现高可用">
 <meta name="twitter:description" content="1.先启动两个mycat服务">
@@ -131,6 +132,10 @@ var _hmt = _hmt || [];
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -208,6 +213,15 @@ var _hmt = _hmt || [];
 <p>#2登录验证</p>
 <p>mysql -umycat -p123456 -h 192.168.140.200 -P 48066</p>
 
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/高可用/">高可用</a>
+                </div>
+            </div>
         </div>
         
         
@@ -297,7 +311,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        4
                     </p>
                 </div>
             </div>
@@ -312,6 +326,29 @@ var _hmt = _hmt || [];
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-先启动两个mycat服务">
+        <span class="has-mr-6">1.1</span>
+        <span>1.先启动两个mycat服务</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#haproxy配置">
+        <span class="has-mr-6">2</span>
+        <span>haproxy配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#ARGET-linux310，内核版本，使用uname-r查看内核，如：3-10-0-514-el7，此时该参数就为linux310；">
+        <span class="has-mr-6">3</span>
+        <span>ARGET=linux310，内核版本，使用uname -r查看内核，如：3.10.0-514.el7，此时该参数就为linux310；</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
     
         <div class="card widget">
     <div class="card-content">
@@ -338,6 +375,13 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/spring-boot/">
                         <span class="tag">spring boot</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/高可用/">
+                        <span class="tag">高可用</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
