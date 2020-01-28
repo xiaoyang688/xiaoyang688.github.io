@@ -2,19 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>XiaoYangBlog</title>
+<title>haproxy + keepalived + mycat 实现高可用 - XiaoYangBlog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="XiaoYangBlog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="1.先启动两个mycat服务1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071&amp;lt;?xml version=&amp;quot;1.0&amp;quot;?&amp;gt;&amp;lt;!DOCTYPE myc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="haproxy + keepalived + mycat 实现高可用">
+<meta property="og:url" content="http://yoursite.com/2020/01/28/haproxy-keepalived-mycat-实现高可用/index.html">
 <meta property="og:site_name" content="XiaoYangBlog">
+<meta property="og:description" content="1.先启动两个mycat服务1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071&amp;lt;?xml version=&amp;quot;1.0&amp;quot;?&amp;gt;&amp;lt;!DOCTYPE myc">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2020-01-28T13:12:03.538Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XiaoYangBlog">
+<meta name="twitter:title" content="haproxy + keepalived + mycat 实现高可用">
+<meta name="twitter:description" content="1.先启动两个mycat服务1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071&amp;lt;?xml version=&amp;quot;1.0&amp;quot;?&amp;gt;&amp;lt;!DOCTYPE myc">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -107,7 +111,7 @@ var _hmt = _hmt || [];
             
             <div class="navbar-start">
                 
-                <a class="navbar-item is-active" href="/">Home</a>
+                <a class="navbar-item" href="/">Home</a>
                 
                 <a class="navbar-item" href="/archives">Archives</a>
                 
@@ -140,8 +144,7 @@ var _hmt = _hmt || [];
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
-    <div class="card">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-content article ">
         
@@ -162,7 +165,7 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/01/28/haproxy-keepalived-mycat-实现高可用/">haproxy + keepalived + mycat 实现高可用</a>
+                haproxy + keepalived + mycat 实现高可用
             
         </h1>
         <div class="content">
@@ -215,198 +218,19 @@ var _hmt = _hmt || [];
 
 
 
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-28T12:56:03.000Z">2020-01-28</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 10 个字)
-                </span>
-                
-                
-            </div>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/28/myNewTestBlog/">
+                <span class="level-item">myNewTestBlog</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/28/myNewTestBlog/">myNewTestBlog</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="修改DNS"><a href="#修改DNS" class="headerlink" title="修改DNS"></a>修改DNS</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/resolv.conf</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>添加nameserver 8.8.8.8</p>
-</blockquote>
-
-        </div>
-        
-        
         
     </div>
 </div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-08-11T08:39:01.000Z">2019-08-11</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 778 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/08/11/在windows下安装hexo静态博客并在GitHub上部署/">在windows下安装hexo静态博客并在GitHub上部署</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="1-首先安装Node-js"><a href="#1-首先安装Node-js" class="headerlink" title="1.首先安装Node.js"></a>1.首先安装Node.js</h1>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/08/11/在windows下安装hexo静态博客并在GitHub上部署/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-08-10T08:36:28.000Z">2019-08-10</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1134 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/08/10/利用-shell-编写刑侦科推理测试题/">利用 shell 编写刑侦科推理测试题</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="按照CSDN论坛里的大佬写的python代码翻译出来的"><a href="#按照CSDN论坛里的大佬写的python代码翻译出来的" class="headerlink" title="按照CSDN论坛里的大佬写的python代码翻译出来的"></a>按照CSDN论坛里的大佬写的python代码翻译出来的</h1>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/08/10/利用-shell-编写刑侦科推理测试题/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-08-10T04:52:50.000Z">2019-08-10</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 125 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/08/10/spring-boot/">spring boot 框架</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h1><blockquote>
-<p>需要实现<strong>HandlerInterceptor</strong>接口的<strong>preHandler</strong>方法  <strong><em>记得添加@Service</em></strong></p>
-</blockquote>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/08/10/spring-boot/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
 
 
 </div>
